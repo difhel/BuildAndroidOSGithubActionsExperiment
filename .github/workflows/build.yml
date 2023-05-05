@@ -10,15 +10,15 @@ jobs:
       # added or changed files to the repository.
       contents: write
     steps:
+       - name: Git config
+         run: git config --global user.name "Mark Fomin"; git config --global user.email "luring.uliksir@gmail.com"
+
        - name: Download repository files
          uses: actions/checkout@v2
          
        - name: Installation of build essentials
          run: sudo apt install repo
        
-       - name: Git config
-         run: git config –-global user.name "Mark Fomin"; git config –-global user.email "luring.uliksir@gmail.com"
-
        - name: Repo init exist checking
          run: if [ -d ".repo" ]; then echo "repo has been initialized"; init=1; else echo "Need to init new one"; init=0; fi;
        
