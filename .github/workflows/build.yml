@@ -1,0 +1,33 @@
+name: Build Rising
+
+on:
+  workflow_dispatch:
+jobs:
+  rdp:
+    runs-on: ubuntu-latest
+    steps:
+       - name: Download repository files
+         uses: actions/checkout@v2
+
+       - name: Repo init
+         run: repo init --depth=1 --no-repo-verify -u https://github.com/RisingTechOSS/android -b thirteen -g default,-mips,-darwin,-notdefault
+       
+       - name: Repo sync
+         run: repo sync -c --no-clone-bundle --optimized-fetch --prune --force-sync -j$(nproc --all)
+       
+       - name: Inherit Lineage vendor common stuffs
+         run: $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
+         
+       - name: Build environment setup
+         run: . build/envsetup.sh
+       
+       - name: Brunch Oriole (userdebug variant)
+         run: brunch "device_codename" userdebug
+         
+       - name: Lunch
+         run: lunch lineage_oriole-userdebug
+        
+       - name: Build
+         run: mka bacon -jX
+         
+       
