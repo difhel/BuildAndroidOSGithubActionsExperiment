@@ -5,18 +5,31 @@ on:
 jobs:
   building:
     runs-on: ubuntu-latest
+    permissions:
+      # Give the default GITHUB_TOKEN write permission to commit and push the
+      # added or changed files to the repository.
+      contents: write
     steps:
        - name: Download repository files
          uses: actions/checkout@v2
          
        - name: Installation of build essentials
          run: sudo apt install repo
+       
+       - name: Git config
+         run: git config –global user.name "Mark Fomin"; git config –global user.email "luring.uliksir@gmail.com"
 
-       - name: Repo init
-         run: repo init --depth=1 --no-repo-verify -u https://github.com/RisingTechOSS/android -b thirteen -g default,-mips,-darwin,-notdefault
+       - name: Repo init exist checking
+         run: if [ -d ".repo" ]; then echo "repo has been initialized"; init=1; else echo "Need to init new one"; init=0; fi;
+       
+       - name: Repo init (if needed)
+         run: if [ $init == 1 ]; then repo init --depth=1 --no-repo-verify -u https://github.com/RisingTechOSS/android -b thirteen -g default,-mips,-darwin,-notdefault; fi;
        
        - name: Repo sync
          run: repo sync -c --no-clone-bundle --optimized-fetch --prune --force-sync -j$(nproc --all)
+         
+       - name: Commit repo (we do not need to sync it every time, right?)
+         uses: stefanzweifel/git-auto-commit-action@v4
        
        - name: Inherit Lineage vendor common stuffs
          run: $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
