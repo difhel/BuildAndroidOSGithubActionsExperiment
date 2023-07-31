@@ -11,7 +11,7 @@ jobs:
       contents: write
     steps:
        - name: Git config
-         run: git config --global user.name "Mark Fomin"; git config --global user.email "luring.uliksir@gmail.com"
+         run: git config --global user.name "Mark Fomin"; git config --global user.email "androidbuild@difhel.dev"
 
        - name: Download repository files
          uses: actions/checkout@v2
@@ -38,7 +38,7 @@ jobs:
          run: . build/envsetup.sh
        
        - name: Brunch Oriole (userdebug variant)
-         run: brunch "device_codename" userdebug
+         run: brunch "device_oriole" userdebug
          
        - name: Lunch
          run: lunch lineage_oriole-userdebug
