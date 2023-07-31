@@ -15,9 +15,6 @@ jobs:
 
        - name: Download repository files
          uses: actions/checkout@v2
-       
-       - name: Apt update & upgrade
-         run: sudo bash -c "apt update && apt upgrade -y"
          
        - name: Installation of repo
          run: sudo apt install python-is-python3; mkdir -p ~/.bin; PATH="${HOME}/.bin:${PATH}"; curl https://storage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo; chmod a+rx ~/.bin/repo
