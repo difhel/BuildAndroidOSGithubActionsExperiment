@@ -15,9 +15,12 @@ jobs:
 
        - name: Download repository files
          uses: actions/checkout@v2
+       
+       - name: Apt update & upgrade
+         run: sudo bash -c "apt update && apt upgrade -y"
          
-       - name: Installation of build essentials
-         run: sudo apt install repo
+       - name: Installation of repo
+         run: sudo apt install python-is-python3; mkdir -p ~/.bin; PATH="${HOME}/.bin:${PATH}"; curl https://storage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo; chmod a+rx ~/.bin/repo
          
        - name: Preparing for repo syncing
          run: sudo apt install git-lfs; git lfs install; rm -rf external/chromium-webview/prebuilt/*; rm -rf .repo/projects/external/chromium-webview/prebuilt/*.git; rm -rf .repo/project-objects/LineageOS/android_external_chromium-webview_prebuilt_*.git
