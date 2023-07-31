@@ -23,7 +23,7 @@ jobs:
          run: sudo apt install git-lfs; git lfs install; rm -rf external/chromium-webview/prebuilt/*; rm -rf .repo/projects/external/chromium-webview/prebuilt/*.git; rm -rf .repo/project-objects/LineageOS/android_external_chromium-webview_prebuilt_*.git
        
        - name: Repo init (if needed)
-         run: if [ -d ".repo" ]; then echo "repo has been initialized"; else echo "Need to init new one"; repo init --depth=1 --no-repo-verify -u https://github.com/RisingTechOSS/android -b thirteen --git-lfs -g default,-mips,-darwin,-notdefault; fi;
+         run: if [ -d ".repo" ]; then echo "repo has been initialized"; else echo "Need to init new one"; ~/.bin/repo init --depth=1 --no-repo-verify -u https://github.com/RisingTechOSS/android -b thirteen --git-lfs -g default,-mips,-darwin,-notdefault; fi;
        
        - name: Repo sync
          run: yes | ~/.bin/repo sync -c --no-clone-bundle --optimized-fetch --prune --force-sync -j$(nproc --all)
