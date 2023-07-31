@@ -23,7 +23,7 @@ jobs:
          run: if [ -d ".repo" ]; then echo "repo has been initialized"; else echo "Need to init new one"; repo init --depth=1 --no-repo-verify -u https://github.com/RisingTechOSS/android -b thirteen -g default,-mips,-darwin,-notdefault; fi;
        
        - name: Repo sync
-         run: repo sync -c --no-clone-bundle --optimized-fetch --prune --force-sync -j$(nproc --all)
+         run: yes | repo sync -c --no-clone-bundle --optimized-fetch --prune --force-sync -j$(nproc --all)
          
        - name: Commit repo (we do not need to sync it every time, right?)
          uses: stefanzweifel/git-auto-commit-action@v4
