@@ -19,11 +19,8 @@ jobs:
        - name: Installation of build essentials
          run: sudo apt install repo
        
-       - name: Repo init exist checking
-         run: if [ -d ".repo" ]; then echo "repo has been initialized"; export init=1; else echo "Need to init new one"; export init=0; fi;
-       
        - name: Repo init (if needed)
-         run: if [[ $init == 0 ]]; then echo "Initing new repo .repo"; repo init --depth=1 --no-repo-verify -u https://github.com/RisingTechOSS/android -b thirteen -g default,-mips,-darwin,-notdefault; fi;
+         run: if [ -d ".repo" ]; then echo "repo has been initialized"; else echo "Need to init new one"; repo init --depth=1 --no-repo-verify -u https://github.com/RisingTechOSS/android -b thirteen -g default,-mips,-darwin,-notdefault; fi;
        
        - name: Repo sync
          run: repo sync -c --no-clone-bundle --optimized-fetch --prune --force-sync -j$(nproc --all)
