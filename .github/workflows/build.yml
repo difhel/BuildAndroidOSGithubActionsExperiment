@@ -23,7 +23,7 @@ jobs:
          run: if [ -d ".repo" ]; then echo "repo has been initialized"; init=1; else echo "Need to init new one"; init=0; fi;
        
        - name: Repo init (if needed)
-         run: if [[ $init == 0 ]]; then repo init --depth=1 --no-repo-verify -u https://github.com/RisingTechOSS/android -b thirteen -g default,-mips,-darwin,-notdefault; fi;
+         run: if [[ $init == 0 ]]; then echo "Initing new repo .repo"; repo init --depth=1 --no-repo-verify -u https://github.com/RisingTechOSS/android -b thirteen -g default,-mips,-darwin,-notdefault; fi;
        
        - name: Repo sync
          run: repo sync -c --no-clone-bundle --optimized-fetch --prune --force-sync -j$(nproc --all)
